@@ -1,0 +1,80 @@
+/* static/feed/css/style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #333;
+}
+
+#logoutlink{
+    text-align: right;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+div {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    margin: 0;
+}
+
+form[action^='/feed/delete/'] button {
+    background-color: #e74c3c;
+}
+
+form[action^='/feed/delete/'] button:hover {
+    background-color: #c0392b;
+}
+
+form[action^='/feed/like/'],
+form[action^='/feed/like/comment/'] {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+form[action^='/feed/like/'] button,
+form[action^='/feed/like/comment/'] button {
+    background-color: #e67e22;
+}
+
+form[action^='/feed/like/'] button:hover,
+form[action^='/feed/like/comment/'] button:hover {
+    background-color: #d35400;
+}

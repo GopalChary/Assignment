@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'feed/css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+<body>
+    <div>
+    <div class="header">
+        <h2>You can start post , like , comment and delete</h2>
+        <h3 id="logoutlink"><a href="{% url 'accounts:logout' %}" >Logout</a></h3>
+    </div>
+    <form method="post" action="{% url 'feed:post_message' %}">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Create and post your thought"></textarea>
+        <button class="btn btn-primary" type="submit">Post</button>
+    </form>
+
+    {% for message in messages %}
+        <div>
+            <p>{{ message.text }}</p>
+            <p>Posted by: {{ message.user.username }}</p>
+            <p>Likes: {{ message.likes.count }}</p>
+            <form method="post" action="{% url 'feed:like_message' message.id %}">
+                {% csrf_token %}
+                <button class="btn btn-success" type="submit">Like</button>
+            </form>
+
+            {% for comment in message.comment_set.all %}
+                <div>
+                    <p>{{ comment.text }}</p>
+                    <p>Comment by: {{ comment.user.username }}</p>
+                    <p>Likes: {{ comment.likes.count }}</p>
+                    <form method="post" action="{% url 'feed:like_comment' comment.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-info" type="submit">Like</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            <form method="post" action="{% url 'feed:post_comment' message.id %}">
+                {% csrf_token %}
+                <textarea name="text" placeholder="Add a comment" required></textarea>
+                <button class="btn btn-warning" type="submit">Comment</button>
+            </form>
+
+            {% if message.user == request.user %}
+                <form method="post" action="{% url 'feed:delete_message' message.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            {% endif %}
+        </div>
+    <div>
+        <h1>--------------------------------------------------------------------------------------------</h1>
+    </div>
+    {% endfor %}
+    </div>
+</body>
+</html>
+
